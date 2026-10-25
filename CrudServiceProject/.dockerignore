@@ -1,0 +1,10 @@
+target/
+.git/
+.gitignore
+.settings/
+.project
+.classpath
+.idea/
+*.iml
+.DS_Store
+HELP.md

@@ -1,0 +1,47 @@
+# Eclipse / STS Workspace Metadata
+.metadata/
+.recommenders/
+.sts4-cache/
+bin/
+tmp/
+*.log
+
+# Build output
+**/target/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Eclipse / STS project configuration
+**/.classpath
+**/.project
+**/.settings/
+**/.factorypath
+**/.springBeans
+**/.apt_generated
+
+# IntelliJ IDEA
+**/.idea/
+**/*.iml
+**/*.iws
+**/*.ipr
+out/
+
+# VS Code
+**/.vscode/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Node.js
+**/node_modules/
+**/dist/
+
+# Docker
+*.env

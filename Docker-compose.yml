@@ -1,0 +1,59 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: tailoring-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: exam_2400030320
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d exam_2400030320"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tailoring-network
+
+  backend:
+    image: harish123123/docker-backend-2400030320:latest
+    build:
+      context: ./CrudServiceProject
+      dockerfile: Dockerfile
+    container_name: tailoring-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/exam_2400030320
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - tailoring-network
+
+  frontend:
+    image: harish123123/docker-frontend-2400030320:latest
+    build:
+      context: ./tailoring-frontend
+      dockerfile: Dockerfile
+    container_name: tailoring-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: on-failure
+    networks:
+      - tailoring-network
+
+volumes:
+  postgres_data:
+
+networks:
+  tailoring-network:
+    driver: bridge
